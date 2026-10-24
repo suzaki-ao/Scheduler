@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <link rel="icon" type="image/png" href="s.png">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f4f0">
+<title>Super Scheduler</title>
+<style>
+:root{--bg:#f5f4f0;--paper:#fff;--ink:#20241f;--muted:#858a80;--line:#e9e9e2;--green:#47745b;--mint:#e7f0e9;--orange:#f1a875;--shadow:0 12px 32px #2631260c}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans JP",system-ui,-apple-system,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1440px;margin:auto;min-height:100vh;padding:20px 28px}.top{display:flex;align-items:center;justify-content:space-between;padding:8px 0 22px}.brand{display:flex;align-items:center;gap:12px;font-weight:750;font-size:19px}.logo{width:38px;height:38px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:21px}.topright{display:flex;align-items:center;gap:12px}.today-pill{font-size:13px;color:var(--muted);background:#fff;padding:10px 15px;border-radius:30px}.iconbtn,.btn{border:0;border-radius:12px;padding:11px 15px;background:#fff;color:var(--ink);box-shadow:var(--shadow)}.btn.primary{background:var(--green);color:#fff;font-weight:650}.btn.soft{background:var(--mint);color:var(--green)}.layout{display:grid;grid-template-columns:250px minmax(400px,1fr) 305px;gap:20px}.panel{background:var(--paper);border:1px solid #eeeee8;border-radius:20px;box-shadow:var(--shadow)}.side{padding:20px;height:max-content}.profile{display:flex;align-items:center;gap:11px;padding:2px 0 22px;border-bottom:1px solid var(--line)}.avatar{width:40px;height:40px;border-radius:14px;background:#f5e4d4;display:grid;place-items:center;font-size:21px}.profile b{font-size:14px}.profile small{display:block;color:var(--muted);margin-top:3px}.nav{padding:17px 0;border-bottom:1px solid var(--line)}.nav-item{padding:11px 12px;border-radius:11px;color:#6c716a;font-size:14px;display:flex;gap:12px;align-items:center;cursor:pointer;margin:3px 0}.nav-item.active{background:var(--mint);color:var(--green);font-weight:650}.nav-item span{font-size:17px;width:20px}.side h4,.right h4{font-size:12px;color:#9a9e97;letter-spacing:.08em;margin:20px 10px 10px}.mini-date{font-size:12px;color:var(--muted);padding:10px;line-height:1.8}.mini-row{display:flex;justify-content:space-between}.mini-row strong{color:var(--ink)}.filter{display:flex;align-items:center;gap:9px;padding:8px 10px;font-size:13px;color:#62675f}.dot{width:9px;height:9px;border-radius:50%;background:#76a88b}.dot.orange{background:#e99d65}.dot.blue{background:#7f9ac4}.center{min-width:0}.welcome{padding:23px 25px;margin-bottom:16px;background:linear-gradient(120deg,#e5efe7,#f5f6ef);border:0;position:relative;overflow:hidden}.welcome h1{font-size:23px;margin:0 0 6px;letter-spacing:-.03em}.welcome p{color:#647267;font-size:13px;margin:0}.welcome .sun{position:absolute;right:35px;top:-17px;font-size:96px;opacity:.8}.calendar{padding:22px}.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.cal-head h2{font-size:19px;margin:0}.cal-controls{display:flex;gap:7px;align-items:center}.cal-controls button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 11px;color:#60655d}.cal-controls .selected{background:var(--green);color:#fff;border-color:var(--green)}.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--line);padding-bottom:10px}.week div{text-align:center;color:#9b9f98;font-size:11px}.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:10px}.day{min-width:0;overflow:hidden;min-height:92px;padding:7px 5px;border-radius:11px;border:1px solid transparent;cursor:pointer}.day:hover{background:#f8f9f6}.day.faded{opacity:.4}.day.selected-day{background:#eef5ef;border-color:#dce9de}.day .n{font-size:12px;color:#4d524b;display:inline-grid;place-items:center;width:24px;height:24px}.day.today .n{background:var(--green);color:white;border-radius:50%}.event{display:block;min-width:0;max-width:100%;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:4px 5px;border-radius:5px;margin-top:4px;background:#e8f1e9;color:#50745b}.event.orange{background:#fbefe5;color:#b37448}.event.blue{background:#eaf0f8;color:#60799f}.agenda{padding:18px 22px;margin-top:16px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.section-title h3{font-size:15px;margin:0}.section-title small{font-size:12px;color:var(--muted)}.agenda-row{display:grid;grid-template-columns:64px 4px 1fr auto;gap:12px;align-items:stretch;padding:9px 0}.time{font-size:12px;color:#8d928a;padding-top:4px}.bar{background:#78a184;border-radius:8px}.bar.orange{background:#e99d65}.entry{padding:1px 0}.entry b{font-size:13px;font-weight:650}.entry small{display:block;color:#989c95;font-size:11px;margin-top:4px}.right{display:flex;flex-direction:column;gap:15px}.right .panel{padding:19px}.quick{background:#fff}.quick h3{font-size:15px;margin:0 0 15px}.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick-actions button{border:0;border-radius:12px;padding:13px 8px;background:#f6f7f3;color:#535a50;font-size:12px;text-align:left}.quick-actions i{font-style:normal;font-size:18px;display:block;margin-bottom:7px}.focus{background:#f3eee5!important}.focus strong{font-size:26px}.focus p{font-size:12px;color:#807a6d;margin:7px 0 0}.task{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.task:last-child{border:0}.task input{accent-color:var(--green);margin-top:2px}.task small{display:block;color:#9b9e97;margin-top:4px}.task.done span{text-decoration:line-through;color:#a5a8a1}.modal-bg{display:none;position:fixed;inset:0;background:#15201666;z-index:5;align-items:center;justify-content:center;padding:16px}.modal-bg.open{display:flex}.modal{width:min(520px,100%);background:#fff;border-radius:20px;padding:24px;box-shadow:0 20px 70px #0003;max-height:90vh;overflow:auto}.modal h2{font-size:19px;margin:0 0 18px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#747a71}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;outline-color:#91b49a}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 18px;border-radius:13px;background:#24382c;color:white;font-size:13px;box-shadow:var(--shadow);display:none;z-index:9}.scanbox{border:1px dashed #cbd4ca;border-radius:12px;padding:16px;text-align:center;color:#777;font-size:12px}.scanbox img{max-width:100%;max-height:200px;display:none;margin:12px auto;border-radius:9px}.ocrnote{font-size:11px;color:#959a92;line-height:1.6;margin-top:8px}.mobile-nav{display:none}
+@media(max-width:1100px){.layout{grid-template-columns:220px minmax(0,1fr)}.right{grid-column:2;display:grid;grid-template-columns:1fr 1fr}.right .quick{grid-column:1/-1}.day{min-height:76px}}
+@media(max-width:820px){.top{flex-wrap:wrap;gap:10px}.topright{width:100%;justify-content:space-between;flex-wrap:wrap}.layout{grid-template-columns:1fr}.side{display:none}.right{grid-column:auto;display:grid;grid-template-columns:1fr 1fr}.right .quick{grid-column:1/-1}}
+@media(max-width:720px){.app{padding:12px}.top{padding:6px 2px 14px}.brand{font-size:16px}.today-pill{display:none}.layout{display:flex;flex-direction:column;gap:12px}.side{display:none}.welcome{padding:19px}.welcome h1{font-size:20px}.welcome .sun{right:15px;font-size:72px;top:-8px}.calendar{padding:15px 10px}.cal-head{align-items:flex-start;gap:10px;flex-direction:column}.cal-head h2{font-size:17px}.cal-controls{width:100%;justify-content:flex-end}.day{min-height:62px;padding:4px 2px}.day .n{width:22px;height:22px}.event{font-size:8px;padding:3px}.agenda{padding:15px}.right{display:flex}.right .quick{order:0}.quick-actions button{padding:10px}.mobile-nav{display:flex;position:sticky;bottom:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:7px;justify-content:space-around;box-shadow:0 8px 25px #0001;z-index:3}.mobile-nav button{border:0;background:none;color:#777;font-size:10px}.mobile-nav span{display:block;font-size:18px;margin-bottom:3px}.formgrid{grid-template-columns:1fr 1fr}}
+</style></head>
+<body><div class="app"><header class="top"><div class="brand"><div class="logo">✦</div>Super Scheduler</div><div class="topright"><span class="today-pill" id="todayLabel"></span><button class="btn soft" id="notifyBtn">🔔 通知を設定</button><button class="btn soft" id="topCamera" onclick="document.getElementById(&apos;scanModal&apos;).classList.add(&apos;open&apos;)">📷 カメラ撮影</button><button class="btn primary" id="topAdd">＋ 予定を追加</button></div></header>
+<div class="layout"><aside class="panel side"><div class="profile"><div class="avatar">🌿</div><div><b>マイ スケジュール</b><small>今日もいい一日に</small></div></div><div class="nav"><div class="nav-item active"><span>▦</span>カレンダー</div><div class="nav-item" id="tasksNav"><span>☑</span>タスク</div><div class="nav-item" id="scanNav"><span>▧</span>カメラ・プリントをスキャン</div></div><h4>ミニカレンダー</h4><div class="mini-date" id="miniDate"></div><h4>カレンダー</h4><div class="filter"><i class="dot"></i>予定</div><div class="filter"><i class="dot orange"></i>タスク</div><div class="filter"><i class="dot blue"></i>リマインダー</div><button class="btn" style="width:100%;margin-top:18px" id="exportBtn">⬇ データを書き出す</button><button class="btn" style="width:100%;margin-top:8px" id="importBtn">⬆ データを読み込む</button><input type="file" id="importFile" accept="application/json" hidden></aside>
+<main class="center"><section class="panel welcome"><h1 id="greeting">おかえりなさい 👋</h1><p>今日の予定を確認して、心地よい一日を。</p><div class="sun">☀️</div></section><section class="panel calendar"><div class="cal-head"><h2 id="monthTitle"></h2><div class="cal-controls"><button id="prevMonth">‹</button><button id="todayBtn">今日</button><button id="nextMonth">›</button><button class="selected">月</button><button id="weekMode">週</button></div></div><div class="week"><div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div></div><div class="days" id="days"></div></section><section class="panel agenda"><div class="section-title"><h3 id="agendaTitle">今日の予定</h3><small id="agendaCount"></small></div><div id="agendaList"></div></section></main>
+<aside class="right"><section class="panel quick"><h3>クイックアクション</h3><div class="quick-actions"><button id="quickEvent"><i>✚</i>予定を追加</button><button id="quickTask"><i>☑</i>タスクを追加</button><button id="quickScan"><i>📷</i>プリントを読み取る</button><button id="quickText"><i>✎</i>文章から予定作成</button></div></section><section class="panel focus"><h4 style="margin:0 0 10px;color:#898575">今日のフォーカス</h4><strong id="focusCount">0</strong><p>件の予定を入れています。余白も大切に 🌱</p></section><section class="panel"><div class="section-title"><h3>やること</h3><button class="iconbtn" id="addTaskSmall">＋</button></div><div id="taskList"></div></section></aside></div><nav class="mobile-nav"><button><span>▦</span>カレンダー</button><button id="mobileTasks"><span>☑</span>タスク</button><button id="mobileAdd"><span>＋</span>追加</button><button id="mobileScan"><span>📷</span>スキャン</button></nav></div>
+<div class="modal-bg" id="eventModal"><div class="modal"><h2 id="modalTitle">予定を追加</h2><form id="eventForm"><div class="formgrid"><div class="field full"><label>予定名</label><input name="title" required placeholder="例：チームミーティング"></div><div class="field"><label>日付</label><input name="date" type="date" required></div><div class="field"><label>開始時刻</label><input name="time" type="time" value="09:00"></div><div class="field"><label>終了時刻</label><input name="end" type="time" value="10:00"></div><div class="field"><label>種類</label><select name="category"><option value="event">予定</option><option value="task">タスク</option><option value="reminder">リマインダー</option></select></div><div class="field full"><label>場所・メモ</label><input name="note" placeholder="場所や持ち物など"></div><div class="field"><label>通知</label><select name="remind"><option value="0">通知なし</option><option value="5">5分前</option><option value="10" selected>10分前</option><option value="30">30分前</option><option value="60">1時間前</option><option value="1440">前日</option></select></div><div class="field"><label>所要時間（分）</label><input name="duration" type="number" min="5" step="5" value="60"></div></div><div class="modal-actions"><button type="button" class="btn" data-close>キャンセル</button><button class="btn primary">保存する</button></div></form></div></div>
+<div class="modal-bg" id="scanModal"><div class="modal"><h2>📷 プリントから予定を作る</h2><div class="field"><label>プリントや案内を撮影・選択</label><div class="scanbox"><input type="file" id="scanFile" accept="image/*,.pdf" capture="environment"><img id="scanPreview"><div class="ocrnote">画像を読み込んだら文字を下の欄に貼り付けてください。日付や時間を検出して、予定候補を作成します。</div></div></div><div class="field"><label>読み取った文字（OCRテキスト）</label><textarea id="scanText" rows="5" placeholder="例：10月28日（水） 14:00 保護者会\n持ち物：筆記用具"></textarea></div><div class="modal-actions"><button type="button" class="btn" data-close>閉じる</button><button type="button" class="btn primary" id="parseText">予定候補を作る</button></div></div></div>
+<div class="modal-bg" id="textModal"><div class="modal"><h2>✎ 文章から予定を作る</h2><div class="field"><label>予定の内容</label><textarea id="naturalText" rows="4" placeholder="例：10月30日 15時から歯医者、30分前に通知"></textarea></div><div class="modal-actions"><button type="button" class="btn" data-close>キャンセル</button><button type="button" class="btn primary" id="parseNatural">候補を作成</button></div></div></div><div class="toast" id="toast"></div>
+<script>
+(()=>{'use strict';const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);let events=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]'),tasks=JSON.parse(localStorage.getItem('superSchedulerTasks')||'[]'),viewDate=new Date(),selectedDate=iso(new Date()),timers=[];function iso(d){return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}function save(){localStorage.setItem('superSchedulerEvents',JSON.stringify(events));localStorage.setItem('superSchedulerTasks',JSON.stringify(tasks));render()}function labelDate(d){return new Intl.DateTimeFormat('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'short'}).format(d)}function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function toast(s){let t=$('#toast');t.textContent=s;t.style.display='block';clearTimeout(t._timer);t._timer=setTimeout(()=>t.style.display='none',2800)}function render(){let y=viewDate.getFullYear(),m=viewDate.getMonth();$('#monthTitle').textContent=`${y}年 ${m+1}月`;$('#todayLabel').textContent=labelDate(new Date());$('#miniDate').innerHTML=`<div style="font-size:14px;color:#333;margin-bottom:4px">${y}年 ${m+1}月</div><div class="mini-row"><span>今月の予定</span><strong>${events.filter(e=>e.date.startsWith(`${y}-${String(m+1).padStart(2,'0')}`)).length}件</strong></div><div class="mini-row"><span>未完了タスク</span><strong>${tasks.filter(t=>!t.done).length}件</strong></div>`;let first=new Date(y,m,1),start=new Date(y,m,1-first.getDay()),html='';for(let i=0;i<42;i++){let d=new Date(start);d.setDate(start.getDate()+i);let ds=iso(d),items=events.filter(e=>e.date===ds);html+=`<div class="day ${d.getMonth()!==m?'faded':''} ${ds===iso(new Date())?'today':''} ${ds===selectedDate?'selected-day':''}" data-date="${ds}"><span class="n">${d.getDate()}</span>${items.slice(0,2).map(e=>`<div class="event ${e.category==='task'?'orange':e.category==='reminder'?'blue':''}">${esc(e.time||'')} ${esc(e.title)}</div>`).join('')}${items.length>2?`<div style="font-size:9px;color:#888">+${items.length-2}件</div>`:''}</div>`}$('#days').innerHTML=html;$$('.day').forEach(el=>el.onclick=()=>{selectedDate=el.dataset.date;render()});let todays=events.filter(e=>e.date===selectedDate).sort((a,b)=>(a.time||'').localeCompare(b.time||''));$('#agendaTitle').textContent=selectedDate===iso(new Date())?'今日の予定':labelDate(new Date(selectedDate+'T00:00:00'))+' の予定';$('#agendaCount').textContent=`${todays.length}件`;$('#focusCount').textContent=events.filter(e=>e.date===iso(new Date())).length;$('#agendaList').innerHTML=todays.length?todays.map(e=>`<div class="agenda-row"><div class="time">${esc(e.time||(e.note&&e.note.includes('未発表')?'時刻未定':'終日'))}<br>${esc(e.end||'')}</div><div class="bar ${e.category==='task'?'orange':''}"></div><div class="entry"><b>${esc(e.title)}</b><small>${esc(e.note||'予定')}${e.duration?` · ${e.duration}分`:''}</small></div><button class="iconbtn delete-event" data-id="${e.id}" title="削除">⋯</button></div>`).join(''):'<div style="padding:20px;color:#a0a39d;text-align:center;font-size:13px">予定はありません。ゆとりのある一日です 🌿</div>';$$('.delete-event').forEach(b=>b.onclick=()=>{if(confirm('この予定を削除しますか？')){events=events.filter(e=>e.id!==b.dataset.id);save()}});$('#taskList').innerHTML=tasks.length?tasks.slice(0,6).map(t=>`<label class="task ${t.done?'done':''}"><input type="checkbox" data-task="${t.id}" ${t.done?'checked':''}><span>${esc(t.title)}<small>${esc(t.date||'期限なし')}</small></span></label>`).join(''):'<div style="color:#a0a39d;font-size:12px;padding:8px 0">タスクはまだありません</div>';$$('[data-task]').forEach(x=>x.onchange=()=>{let t=tasks.find(t=>t.id===x.dataset.task);t.done=x.checked;save()})}
+function openModal(id){$('#'+id).classList.add('open')}function closeModal(){ $$('.modal-bg').forEach(x=>x.classList.remove('open'))}$$('[data-close]').forEach(b=>b.onclick=closeModal);$$('.modal-bg').forEach(x=>x.onclick=e=>{if(e.target===x)closeModal()});function newEvent(date=selectedDate,title='',category='event'){let f=$('#eventForm');f.reset();f.elements.date.value=date;f.elements.title.value=title;f.elements.category.value=category;$('#modalTitle').textContent=category==='task'?'タスクを追加':'予定を追加';openModal('eventModal');setTimeout(()=>f.elements.title.focus(),50)}$('#topAdd').onclick=()=>newEvent();$('#quickEvent').onclick=()=>newEvent();$('#quickTask').onclick=()=>newEvent(selectedDate,'','task');$('#addTaskSmall').onclick=()=>newEvent(selectedDate,'','task');$('#days').addEventListener('dblclick',e=>{let el=e.target.closest('.day');if(el)newEvent(el.dataset.date)});$('#eventForm').onsubmit=e=>{e.preventDefault();let d=new FormData(e.target),ev=Object.fromEntries(d.entries());ev.id=crypto.randomUUID?crypto.randomUUID():String(Date.now());ev.remind=Number(ev.remind);events.push(ev);if(ev.category==='task')tasks.push({id:ev.id,title:ev.title,date:ev.date,done:false});save();closeModal();toast('予定を保存しました');scheduleReminder(ev)};function scheduleReminder(ev){if(!ev.remind||!ev.date||!ev.time)return;let at=new Date(`${ev.date}T${ev.time}:00`).getTime()-ev.remind*60000,delay=at-Date.now();if(delay<=0)return;let timer=setTimeout(()=>{if(at>Date.now())scheduleReminder(ev);else notify(ev.title,`${ev.remind>=60?`${Math.floor(ev.remind/60)}時間前`:`${ev.remind}分前`} · ${ev.note||'予定の時間です'}`)},Math.min(delay,2147480000));timers.push(timer)}function notify(title,body){if('Notification'in window&&Notification.permission==='granted'){new Notification(title,{body,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">✦</text></svg>'})}else toast(`${title} — ${body}`)}$('#notifyBtn').onclick=async()=>{if(!('Notification'in window)){toast('このブラウザーでは通知を利用できません');return}let p=await Notification.requestPermission();toast(p==='granted'?'通知を有効にしました':'通知は許可されませんでした');if(p==='granted')events.forEach(scheduleReminder)};$('#prevMonth').onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);render()};$('#nextMonth').onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);render()};$('#todayBtn').onclick=()=>{viewDate=new Date();selectedDate=iso(new Date());render()};$('#weekMode').onclick=()=>toast('週表示は次のアップデートで対応予定です');$('#tasksNav').onclick=$('#mobileTasks').onclick=()=>{$('#taskList').scrollIntoView({behavior:'smooth',block:'center'})};$('#quickScan').onclick=$('#scanNav').onclick=$('#mobileScan').onclick=()=>openModal('scanModal');$('#quickText').onclick=()=>openModal('textModal');$('#mobileAdd').onclick=()=>newEvent();$('#scanFile').onchange=e=>{let f=e.target.files[0];if(f&&f.type.startsWith('image/')){let img=$('#scanPreview');img.src=URL.createObjectURL(f);img.style.display='block'}};$('#parseText').onclick=()=>{let text=$('#scanText').value.trim();if(!text){toast('文字を入力してください');return}let lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean),title=lines[0].slice(0,55),match=text.match(/(\d{1,2})月(\d{1,2})日/),time=text.match(/(\d{1,2})[:時](\d{2})?分?/),date=new Date();if(match)date.setMonth(Number(match[1])-1,Number(match[2]));let isoDate=iso(date),hh=time?String(time[1]).padStart(2,'0')+':'+String(time[2]||'00').padStart(2,'0'):'09:00';closeModal();newEvent(isoDate,title,'event');$('#eventForm').elements.time.value=hh;$('#eventForm').elements.note.value=lines.slice(1).join(' ').slice(0,150);toast('読み取り候補を確認して保存してください')};$('#parseNatural').onclick=()=>{let text=$('#naturalText').value.trim();if(!text){toast('文章を入力してください');return}let d=new Date(),m=text.match(/(\d{1,2})月(\d{1,2})日/),day=text.match(/(\d{1,2})日/),tm=text.match(/(\d{1,2})[:時](\d{2})?分?/);if(m)d.setMonth(+m[1]-1,+m[2]);else if(day)d.setDate(+day[1]);let title=text.replace(/\d{1,2}月\d{1,2}日|\d{1,2}日|\d{1,2}[:時]\d{0,2}分?/g,'').replace(/(来週|明日|今日|に|から|、|,)/g,' ').trim()||text;closeModal();newEvent(iso(d),title,'event');if(tm)$('#eventForm').elements.time.value=String(tm[1]).padStart(2,'0')+':'+String(tm[2]||'00').padStart(2,'0');if(/30分前/.test(text))$('#eventForm').elements.remind.value='30';toast('候補を確認して保存してください')};$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({events,tasks},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='super-scheduler-backup.json';a.click();URL.revokeObjectURL(a.href)};$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=async e=>{try{let data=JSON.parse(await e.target.files[0].text());events=data.events||[];tasks=data.tasks||[];save();toast('データを読み込みました')}catch{toast('ファイルを読み込めませんでした')}};let hour=new Date().getHours();$('#greeting').textContent=(hour<11?'おはようございます':hour<17?'こんにちは':'おつかれさまです')+' 👋';render();events.forEach(scheduleReminder)})();
+</script>
+<script>
+// Enhancements: on-device OCR, weekly agenda, search, repeat schedules, and editing.
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+let selectedImage=null,weekMode=false;
+const scan=$('#scanModal .modal');
+const ocrActions=document.createElement('div');ocrActions.className='modal-actions';ocrActions.style.justifyContent='space-between';ocrActions.innerHTML='<span id="ocrStatus" class="ocrnote">画像を選ぶとOCRできます</span><button type="button" class="btn soft" id="runOcr">画像をOCR</button>';
+scan.querySelector('.scanbox').after(ocrActions);
+$('#scanFile').onchange=e=>{let f=e.target.files[0];if(!f)return;selectedImage=f;let img=$('#scanPreview');img.src=URL.createObjectURL(f);img.style.display='block';$('#ocrStatus').textContent='画像を読み込めました'};
+$('#runOcr').onclick=async()=>{if(!selectedImage){$('#ocrStatus').textContent='先に画像を撮影・選択してください';return}let status=$('#ocrStatus'),btn=$('#runOcr');btn.disabled=true;try{if(!window.Tesseract){status.textContent='OCRエンジンを読み込み中…';await new Promise((ok,no)=>{let s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}status.textContent='日本語・英語を認識中…';let result=await Tesseract.recognize(selectedImage,'jpn+eng',{logger:m=>{if(m.status==='recognizing text')status.textContent=`文字を認識中… ${Math.round((m.progress||0)*100)}%`}});$('#scanText').value=result.data.text.trim();status.textContent='認識できました。誤字や日付を確認してください';}catch(err){console.error(err);status.textContent='OCRに失敗しました。ネット接続を確認してください'}finally{btn.disabled=false}};
+// Add search and recurrence controls without relying on a server framework.
+const controls=$('.cal-controls');let search=document.createElement('input');search.placeholder='予定を検索';search.setAttribute('aria-label','予定を検索');search.style.cssText='width:120px;border:1px solid #e9e9e2;border-radius:9px;padding:8px;font-size:12px';controls.prepend(search);
+const repeat=document.createElement('div');repeat.className='field full';repeat.innerHTML='<label>繰り返し登録</label><select id="repeatRule"><option value="none">繰り返さない</option><option value="weekly">毎週（12回）</option><option value="monthly">毎月（12回）</option></select>';$('#eventForm .formgrid').append(repeat);
+$('#eventForm').addEventListener('submit',()=>{let rule=$('#repeatRule').value;if(rule==='none')return;setTimeout(()=>{let source=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]').at(-1);if(!source)return;let copies=[];for(let n=1;n<=11;n++){let d=new Date(source.date+'T12:00:00');if(rule==='weekly')d.setDate(d.getDate()+7*n);else d.setMonth(d.getMonth()+n);copies.push({...source,id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+n),date:new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)})}let all=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]');all.push(...copies);localStorage.setItem('superSchedulerEvents',JSON.stringify(all));location.reload()},0)});
+// Search current calendar and agenda as their content is re-rendered.
+function applySearch(){let q=search.value.trim().toLocaleLowerCase();$$('.day').forEach(day=>{let has=[...day.querySelectorAll('.event')].some(e=>e.textContent.toLocaleLowerCase().includes(q));day.style.opacity=q&&!has?'0.2':''});$$('.agenda-row').forEach(row=>row.style.display=!q||row.textContent.toLocaleLowerCase().includes(q)?'':'none');if(weekMode){let sel=new Date(selectedDate+'T12:00:00'),start=new Date(sel);start.setDate(sel.getDate()-sel.getDay());let end=new Date(start);end.setDate(start.getDate()+6);$$('.day').forEach(day=>{let d=new Date(day.dataset.date+'T12:00:00');day.style.display=d>=start&&d<=end?'':'none'})}}
+search.addEventListener('input',applySearch);new MutationObserver(applySearch).observe($('#days'),{childList:true});new MutationObserver(applySearch).observe($('#agendaList'),{childList:true});
+// The weekly button switches the existing calendar grid to the selected date's week.
+$('#weekMode').onclick=()=>{weekMode=!weekMode;$('#weekMode').classList.toggle('selected',weekMode);document.querySelector('.cal-controls .selected:not(#weekMode)')?.classList.remove('selected');if(!weekMode)$('#todayBtn').focus();let days=[...$$('.day')];let chosen=selectedDate;days.forEach(day=>{let d=new Date(day.dataset.date+'T12:00:00'),sel=new Date(chosen+'T12:00:00'),offset=(sel.getDay()+7)%7,start=new Date(sel);start.setDate(sel.getDate()-offset);let end=new Date(start);end.setDate(start.getDate()+6);day.style.display=!weekMode||d>=start&&d<=end?'':'none'});if(weekMode)toast('週表示：選択日の週を表示中');else toast('月表示に戻しました')};
+// Clicking an agenda item opens it for editing; deletion remains on its own action.
+$('#agendaList').addEventListener('click',e=>{let row=e.target.closest('.agenda-row');if(!row||e.target.closest('.delete-event'))return;let title=row.querySelector('.entry b')?.textContent;let date=$('#agendaTitle').textContent;let list=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]'),ev=list.find(x=>x.date===selectedDate&&x.title===title);if(!ev)return;let f=$('#eventForm');f.reset();for(let k of ['title','date','time','end','category','note','remind','duration'])if(f.elements[k])f.elements[k].value=ev[k]??'';f.dataset.editId=ev.id;$('#modalTitle').textContent='予定を編集';$('#eventModal').classList.add('open')});
+$('#eventForm').addEventListener('submit',e=>{let f=$('#eventForm'),id=f.dataset.editId;if(!id)return;e.preventDefault();e.stopImmediatePropagation();let vals=Object.fromEntries(new FormData(f).entries()),arr=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]'),idx=arr.findIndex(x=>x.id===id);if(idx>=0){arr[idx]={...arr[idx],...vals,id};localStorage.setItem('superSchedulerEvents',JSON.stringify(arr));let task=JSON.parse(localStorage.getItem('superSchedulerTasks')||'[]').find(x=>x.id===id);if(task){task.title=vals.title;task.date=vals.date;localStorage.setItem('superSchedulerTasks',JSON.stringify(JSON.parse(localStorage.getItem('superSchedulerTasks')||'[]').map(x=>x.id===id?task:x)))}delete f.dataset.editId;location.reload()}},true);
+$('#parseText').onclick=()=>{let text=$('#scanText').value.trim();if(!text){toast('先に画像をOCRするか、文字を入力してください');return}let lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean),dateMatch=text.match(/(20\d{2})[年./-](\d{1,2})[月./-](\d{1,2})日?/ )||text.match(/(\d{1,2})月(\d{1,2})日/),time=text.match(/([01]?\d|2[0-3])[:時]([0-5]?\d)?分?/),d=new Date(),titleLine=lines.find(x=>/\d{1,2}[:時]|\d{1,2}月\d{1,2}日|20\d{2}[./-]/.test(x))||lines[0],title=titleLine.replace(/20\d{2}[年./-]\d{1,2}[月./-]\d{1,2}日?|\d{1,2}月\d{1,2}日|([01]?\d|2[0-3])[:時]([0-5]?\d)?分?/g,' ').replace(/[（）()、,:：]/g,' ').trim();if(!title)title=lines[0].slice(0,60);if(dateMatch){if(dateMatch[3])d=new Date(+dateMatch[1],+dateMatch[2]-1,+dateMatch[3]);else d.setMonth(+dateMatch[1]-1,+dateMatch[2])}let hh=time?String(time[1]).padStart(2,'0')+':'+String(time[2]||'00').padStart(2,'0'):'09:00',date=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);$('#scanModal').classList.remove('open');$('#eventForm').reset();$('#eventForm').elements.date.value=date;$('#eventForm').elements.title.value=title;$('#eventForm').elements.time.value=hh;$('#eventForm').elements.note.value=lines.filter(x=>x!==titleLine).join(' / ').slice(0,220);$('#eventModal').classList.add('open');toast('OCR結果から候補を作成しました。内容を確認して保存してください')};
+})();
+</script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);let cameraStream=null;
+// Live camera view and shutter for direct document capture.
+const scanBox=$('#scanModal .scanbox');let camera=document.createElement('div');camera.style.cssText='display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0';camera.innerHTML='<button type="button" class="btn soft" id="cameraStart">📹 ライブ映像を起動</button><button type="button" class="btn" id="cameraShot" disabled>📸 撮影</button><button type="button" class="btn" id="cameraStop" disabled>停止</button><button type="button" class="btn" id="cameraFile">📷 端末のカメラ / 画像から選ぶ</button><video id="cameraView" autoplay playsinline style="display:none;width:100%;max-height:300px;object-fit:contain;background:#18221b;border-radius:12px"></video><canvas id="cameraCanvas" hidden></canvas><div id="cameraHelp" class="ocrnote" style="width:100%;text-align:left">ライブ映像にはブラウザーのカメラ許可が必要です。file://で許可されない場合は、端末の撮影・画像選択を使えます。</div>';
+scanBox.append(camera);
+$('#cameraFile').onclick=()=>$('#scanFile').click();
+$('#cameraStart').onclick=async()=>{let status=$('#ocrStatus'),help=$('#cameraHelp');if(!window.isSecureContext){let msg='このページは安全な接続として扱われていないため、ライブ映像を使えません。file://ではブラウザー制限を解除できません。端末のカメラ / 画像から選ぶを使ってください。';status.textContent=msg;help.textContent=msg;return}if(!navigator.mediaDevices||typeof navigator.mediaDevices.getUserMedia!=='function'){let msg='このアプリ内ブラウザーはライブカメラAPIに対応していません。端末のカメラ / 画像から選ぶを使ってください。';status.textContent=msg;help.textContent=msg;return}try{status.textContent='ブラウザーのカメラ許可を確認中…';cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});let v=$('#cameraView');v.srcObject=cameraStream;await v.play();v.style.display='block';$('#cameraShot').disabled=false;$('#cameraStop').disabled=false;$('#cameraStart').disabled=true;status.textContent='カメラ起動中。撮影ボタンで画像を取り込めます';help.textContent='ライブ映像が表示されています。撮影後に「画像をOCR」を押してください。'}catch(e){console.error('Camera start failed',e);let reason=e.name==='NotAllowedError'?'カメラ許可が拒否されました。ブラウザーのサイト設定でカメラを許可してから再試行してください。':e.name==='NotFoundError'?'利用可能なカメラが見つかりません。端末のカメラ / 画像から選ぶを使ってください。':e.name==='NotReadableError'?'カメラが他のアプリで使用中です。他のカメラアプリを閉じて再試行してください。':e.name==='SecurityError'?'このページではカメラを使えません。ブラウザーの制限なので、端末のカメラ / 画像から選ぶを使ってください。':`カメラを起動できません（${e.name||'不明なエラー'}）。端末のカメラ / 画像から選ぶを使ってください。`;status.textContent=reason;help.textContent=reason}};
+// Make the prominent header action perform the actual camera request in the user's click gesture.
+$('#topCamera').onclick=()=>{$('#scanModal').classList.add('open');$('#cameraStart').onclick()};
+function stopCamera(){if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}$('#cameraView').srcObject=null;$('#cameraView').style.display='none';$('#cameraShot').disabled=true;$('#cameraStop').disabled=true;$('#cameraStart').disabled=false}
+$('#cameraStop').onclick=stopCamera;$('#cameraShot').onclick=()=>{let v=$('#cameraView'),c=$('#cameraCanvas');if(!v.videoWidth)return; c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);c.toBlob(blob=>{if(!blob)return;let f=new File([blob],`scan-${Date.now()}.jpg`,{type:'image/jpeg'}),dt=new DataTransfer();dt.items.add(f);$('#scanFile').files=dt.files;$('#scanFile').dispatchEvent(new Event('change',{bubbles:true}));stopCamera();$('#ocrStatus').textContent='撮影しました。「画像をOCR」を押してください'},'image/jpeg',.92)};
+$('#scanModal').addEventListener('click',e=>{if(e.target===$('#scanModal'))stopCamera()});$$('[data-close]').forEach(b=>b.addEventListener('click',stopCamera));
+// Import native backup JSON, author-created schedule JSON, or an image for OCR.
+const importInput=$('#importFile');importInput.accept='.json,application/json,image/*';let importBtn=document.createElement('button');importBtn.className='btn';importBtn.textContent='📥 予定を読み込む';importBtn.onclick=()=>importInput.click();$('.quick-actions').append(importBtn);
+function normalizeDate(v){if(!v)return '';let s=String(v);if(/^\d{4}-\d\d-\d\d/.test(s))return s.slice(0,10);let m=s.match(/(20\d{2})[./年-](\d{1,2})[./月-](\d{1,2})/);return m?`${m[1]}-${String(+m[2]).padStart(2,'0')}-${String(+m[3]).padStart(2,'0')}`:''}
+importInput.onchange=async e=>{let f=e.target.files?.[0];if(!f)return;if(f.type.startsWith('image/')){let dt=new DataTransfer();dt.items.add(f);$('#scanFile').files=dt.files;$('#scanFile').dispatchEvent(new Event('change',{bubbles:true}));$('#scanModal').classList.add('open');return}try{let data=JSON.parse(await f.text()),list=Array.isArray(data)?data:(data.events||data.schedules||data.appointments||data.items||[]);if(!Array.isArray(list)||!list.length)throw Error('予定一覧がありません');let converted=list.map((x,i)=>{let start=x.start||x.startAt||x.datetime||'';return{id:x.id||`import-${Date.now()}-${i}`,title:String(x.title||x.name||x.summary||'（タイトルなし）'),date:normalizeDate(x.date||x.day||start),time:x.time||(start.match(/T(\d\d:\d\d)/)||[])[1]||'',end:x.endTime||x.end||'',category:x.category||'event',note:x.note||x.location||x.description||'',remind:Number(x.remind||x.reminder||0),duration:x.duration||60,repeat:'none'}}).filter(x=>x.date);if(!converted.length)throw Error('日付を読み取れる予定がありません');let existing=JSON.parse(localStorage.getItem('superSchedulerEvents')||'[]');let keys=new Set(existing.map(x=>`${x.date}|${x.time}|${x.title}`));let fresh=converted.filter(x=>!keys.has(`${x.date}|${x.time}|${x.title}`));localStorage.setItem('superSchedulerEvents',JSON.stringify([...existing,...fresh]));$('#importFile').value='';alert(`${fresh.length}件の予定を読み込みました${converted.length>fresh.length?`（重複${converted.length-fresh.length}件を除外）`:''}`);location.reload()}catch(err){alert(`JSONを読み込めませんでした。\n${err.message}\n\n対応例: {"events":[{"title":"歯医者","date":"2026-11-03","time":"09:30"}]}`)}};
+// Offer a downloadable starter template next to the import action.
+let template=document.createElement('button');template.className='btn';template.textContent='JSON見本を保存';template.style.marginTop='8px';template.style.width='100%';template.onclick=()=>{let data={events:[{title:'歯医者',date:'2026-11-03',time:'09:30',end:'10:30',category:'event',note:'保険証を持参',remind:30}]},a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='super-scheduler-template.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};$('#importBtn').after(template);
+})();
+</script><script>
+(()=>{
+  const eventsKey='superSchedulerEvents', undoKey='superSchedulerUndo', returnKey='superSchedulerReturnDate';
+  const $=s=>document.querySelector(s), toastEl=$('#toast'), agenda=$('#agendaList');
+  const tell=message=>{if(!toastEl)return;toastEl.textContent=message;toastEl.style.display='block';clearTimeout(toastEl._timer);toastEl._timer=setTimeout(()=>toastEl.style.display='none',2800)};
+  const storedEvents=()=>{try{const v=JSON.parse(localStorage.getItem(eventsKey)||'[]');return Array.isArray(v)?v:[]}catch{return[]}};
+  const dayAfter=date=>{const d=new Date(date+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)};
+  const datePart=date=>date.replace(/-/g,'');
+  const timePart=time=>time.replace(':','')+'00';
+  const escapeIcs=value=>String(value??'').replace(/\\/g,'\\\\').replace(/\r\n|\n|\r/g,'\\n').replace(/([,;])/g,'\\$1').replace(/\u0000/g,'');
+  const foldLine=line=>{const out=[];let part='',size=0;for(const ch of line){const n=new TextEncoder().encode(ch).length;if(size+n>70){out.push(part);part=' '+ch;size=n+1}else{part+=ch;size+=n}}out.push(part);return out.join('\r\n')};
+  function downloadIcs(){
+    const list=storedEvents().filter(e=>e&&/^\d{4}-\d{2}-\d{2}$/.test(e.date));
+    if(!list.length){tell('書き出せる予定がありません');return}
+    const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Super Scheduler//JA','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Super Scheduler','BEGIN:VTIMEZONE','TZID:Asia/Tokyo','X-LIC-LOCATION:Asia/Tokyo','BEGIN:STANDARD','TZOFFSETFROM:+0900','TZOFFSETTO:+0900','TZNAME:JST','DTSTART:19700101T000000','END:STANDARD','END:VTIMEZONE'];
+    const stamp=new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+    for(const ev of list){
+      const timed=/^\d{2}:\d{2}$/.test(ev.time||'');
+      const uid=String(ev.id||('event-'+Date.now()+'-'+Math.random())).replace(/[^A-Za-z0-9._-]/g,'')+'@super-scheduler.local';
+      lines.push('BEGIN:VEVENT','UID:'+uid,'DTSTAMP:'+stamp,'SUMMARY:'+escapeIcs(ev.title||'予定'));
+      if(timed){
+        const [sh,sm]=ev.time.split(':').map(Number),startMinutes=sh*60+sm;
+        let endDate=ev.date,endTime;
+        if(/^\d{2}:\d{2}$/.test(ev.end||'')){endTime=ev.end;if(endTime<=ev.time)endDate=dayAfter(ev.date)}
+        else{const total=startMinutes+Math.max(5,Number(ev.duration)||60);endDate=ev.date;let dayShift=Math.floor(total/1440);if(dayShift){const d=new Date(endDate+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+dayShift);endDate=d.toISOString().slice(0,10)}const mins=total%1440;endTime=String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')}
+        lines.push('DTSTART;TZID=Asia/Tokyo:'+datePart(ev.date)+'T'+timePart(ev.time),'DTEND;TZID=Asia/Tokyo:'+datePart(endDate)+'T'+timePart(endTime));
+        const remind=Number(ev.remind)||0;
+        if(remind>0)lines.push('BEGIN:VALARM','TRIGGER:-PT'+remind+'M','ACTION:DISPLAY','DESCRIPTION:'+escapeIcs(ev.title||'予定'),'END:VALARM')
+      }else{lines.push('DTSTART;VALUE=DATE:'+datePart(ev.date),'DTEND;VALUE=DATE:'+datePart(dayAfter(ev.date)))}
+      if(ev.note)lines.push('DESCRIPTION:'+escapeIcs(ev.note));
+      if(ev.category)lines.push('CATEGORIES:'+escapeIcs(ev.category));
+      lines.push('END:VEVENT')
+    }
+    lines.push('END:VCALENDAR');
+    const blob=new Blob([lines.map(foldLine).join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='super-scheduler.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);tell(list.length+'件をカレンダー用ファイルに書き出しました')
+  }
+  const icsButton=document.createElement('button');icsButton.type='button';icsButton.className='btn';icsButton.id='icsExportBtn';icsButton.style.cssText='width:100%;margin-top:8px';icsButton.textContent='📅 カレンダーアプリ用 (.ics)';icsButton.onclick=downloadIcs;
+  $('#exportBtn')?.after(icsButton);
+  function displayUndo(){
+    let pending;try{pending=JSON.parse(sessionStorage.getItem(undoKey)||'null')}catch{}
+    if(!pending||!pending.event||pending.expires<Date.now()){sessionStorage.removeItem(undoKey);return}
+    const bar=document.createElement('div');bar.setAttribute('role','status');bar.style.cssText='position:fixed;z-index:1000;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:#24382c;color:#fff;box-shadow:0 8px 28px #0003;font:14px system-ui,sans-serif;max-width:calc(100vw - 28px)';
+    const label=document.createElement('span');label.textContent='「'+(pending.event.title||'予定')+'」を削除しました';
+    const undo=document.createElement('button');undo.type='button';undo.textContent='元に戻す';undo.style.cssText='border:0;border-radius:9px;padding:8px 12px;background:#e4efe8;color:#315f4a;font-weight:700;cursor:pointer;white-space:nowrap';
+    bar.append(label,undo);document.body.append(bar);
+    const timer=setTimeout(()=>{bar.remove();sessionStorage.removeItem(undoKey)},pending.expires-Date.now());
+    undo.onclick=()=>{clearTimeout(timer);let p;try{p=JSON.parse(sessionStorage.getItem(undoKey)||'null')}catch{};if(!p||p.expires<Date.now()){bar.remove();sessionStorage.removeItem(undoKey);tell('取り消し期限が切れました');return}const current=storedEvents();if(!current.some(e=>String(e.id)===String(p.event.id)))current.push(p.event);localStorage.setItem(eventsKey,JSON.stringify(current));sessionStorage.removeItem(undoKey);if(p.returnDate)sessionStorage.setItem(returnKey,p.returnDate);location.reload()};
+  }
+  if(agenda)agenda.addEventListener('click',event=>{
+    const button=event.target.closest('.delete-event');if(!button)return;
+    event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
+    if(!confirm('この予定を削除しますか？'))return;
+    const all=storedEvents(),record=all.find(e=>String(e.id)===String(button.dataset.id));
+    if(!record){tell('予定が見つかりませんでした');return}
+    const selected=$('.day.selected-day')?.dataset.date||record.date;
+    sessionStorage.setItem(undoKey,JSON.stringify({event:record,returnDate:selected,expires:Date.now()+12000}));
+    localStorage.setItem(eventsKey,JSON.stringify(all.filter(e=>String(e.id)!==String(record.id))));
+    location.reload()
+  },true);
+  const restoreDate=sessionStorage.getItem(returnKey);
+  if(restoreDate){sessionStorage.removeItem(returnKey);const cell=$('.day[data-date="'+restoreDate+'"]');if(cell)cell.click()}
+  displayUndo();
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){const modal=$('.modal-bg.open');if(modal){event.preventDefault();modal.querySelector('[data-close]')?.click();modal.classList.remove('open')}return}
+    if(event.ctrlKey||event.metaKey||event.altKey)return;
+    const target=event.target,editing=target&&(target.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+    if(editing)return;
+    const key=event.key.toLowerCase();
+    if(key==='n'){$('#topAdd')?.click();event.preventDefault()}
+    else if(key==='t'){$('#quickTask')?.click();event.preventDefault()}
+    else if(event.key==='/'){const search=$('input[placeholder*="予定を検索"]')||$('input[type="search"]');if(search){event.preventDefault();search.focus()}}
+  });
+  $('#topAdd')?.setAttribute('title','予定を追加（N）');$('#quickTask')?.setAttribute('title','タスクを追加（T）');
+  const search=$('input[placeholder*="予定を検索"]')||$('input[type="search"]');if(search)search.setAttribute('title','検索（/）');
+})();
+</script><script>
+(()=>{
+  const $=selector=>document.querySelector(selector), box=$('#naturalText'), parseButton=$('#parseNatural'), form=$('#eventForm');
+  if(!box||!parseButton||!form)return;
+  box.placeholder='例：明日14時から歯医者、30分前に通知'+'\n'+'来週水曜 18:30〜20:00 打ち合わせ、場所：会議室'+'\n'+'2026/11/3 9時 健診、持ち物：保険証';
+  const help=document.createElement('div');help.className='ocrnote';help.textContent='日付・曜日・時刻・所要時間・通知・場所を読み取り、保存前に予定フォームで確認できます。';box.after(help);
+  const ascii=value=>String(value||'').replace(/[０-９]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0xFEE0)).replace(/[：]/g,':').replace(/[／]/g,'/').replace(/[－−]/g,'-').replace(/\u3000/g,' ');
+  const formatDate=date=>date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+  const makeDate=(year,month,day)=>{const d=new Date(year,month-1,day,12);return d.getFullYear()===year&&d.getMonth()===month-1&&d.getDate()===day?d:null};
+  const plusDays=(date,n)=>{const d=new Date(date);d.setDate(d.getDate()+n);return d};
+  function parseDate(text){
+    const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);
+    let m=text.match(/(20\d{2})\s*(?:年|[-/.])\s*(\d{1,2})\s*(?:月|[-/.])\s*(\d{1,2})\s*日?/);
+    if(m){const d=makeDate(+m[1],+m[2],+m[3]);return{date:d&&formatDate(d),token:m[0],explicit:true}}
+    m=text.match(/(来年|来月|今月)?\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日?/);
+    if(!m)m=text.match(/(来年|来月|今月)?\s*(\d{1,2})\s*\/\s*(\d{1,2})/);
+    if(m){
+      let year=now.getFullYear(),month=+m[2],day=+m[3];
+      if(m[1]==='来年')year++;
+      else if(m[1]==='来月'){const next=new Date(now.getFullYear(),now.getMonth()+1,1);year=next.getFullYear();month=next.getMonth()+1}
+      else if(m[1]==='今月')month=now.getMonth()+1;
+      let d=makeDate(year,month,day);
+      if(d&& !m[1]&&d<today){year++;d=makeDate(year,month,day)}
+      return{date:d&&formatDate(d),token:m[0],explicit:true}
+    }
+    m=text.match(/(来月|今月)\s*(\d{1,2})\s*日(?!前|後|間)/);
+    if(m){const base=m[1]==='来月'?new Date(now.getFullYear(),now.getMonth()+1,1):new Date(now.getFullYear(),now.getMonth(),1);const d=makeDate(base.getFullYear(),base.getMonth()+1,+m[2]);return{date:d&&formatDate(d),token:m[0],explicit:true}}
+    m=text.match(/(\d{1,2})\s*日(?!前|後|間)/);
+    if(m){let year=now.getFullYear(),month=now.getMonth()+1,d=makeDate(year,month,+m[1]);if(d&&d<today){const next=new Date(year,month,1);year=next.getFullYear();month=next.getMonth()+1;d=makeDate(year,month,+m[1])}return{date:d&&formatDate(d),token:m[0],explicit:true}}
+    m=text.match(/(\d+)\s*日後/);if(m)return{date:formatDate(plusDays(today,+m[1])),token:m[0],explicit:true};
+    m=text.match(/(\d+)\s*週間後/);if(m)return{date:formatDate(plusDays(today,+m[1]*7)),token:m[0],explicit:true};
+    if(/再来週/.test(text)){const monday=plusDays(today,((8-today.getDay())%7||7)+7);return{date:formatDate(monday),token:(text.match(/再来週(?:の)?(?:月曜日|月曜)?/)||['再来週'])[0],explicit:true}}
+    m=text.match(/(明々後日|しあさって|明後日|あさって|明日|あした|今日|本日|きょう|昨日|きのう)/);
+    if(m){const offset=/明々後日|しあさって/.test(m[0])?3:/明後日|あさって/.test(m[0])?2:/明日|あした/.test(m[0])?1:/昨日|きのう/.test(m[0])?-1:0;return{date:formatDate(plusDays(today,offset)),token:m[0],explicit:true}}
+    if(/来月末/.test(text)){const d=new Date(now.getFullYear(),now.getMonth()+2,0,12);return{date:formatDate(d),token:'来月末',explicit:true}}
+    if(/(?:今月末|月末)/.test(text)){const d=new Date(now.getFullYear(),now.getMonth()+1,0,12);return{date:formatDate(d),token:(text.match(/今月末|月末/)||['月末'])[0],explicit:true}}
+    const weekNames={'日':0,'月':1,'火':2,'水':3,'木':4,'金':5,'土':6};
+    m=text.match(/(再来週|来週|今週|次の週)\s*(?:の)?\s*(日|月|火|水|木|金|土)(?:曜日|曜)?/);
+    if(m){const monday=plusDays(today,(8-today.getDay())%7||7);const base=m[1]==='今週'?plusDays(monday,-7):m[1]==='再来週'?plusDays(monday,7):monday;const offset=weekNames[m[2]]===0?6:weekNames[m[2]]-1;return{date:formatDate(plusDays(base,offset)),token:m[0],explicit:true}}
+    m=text.match(/(日|月|火|水|木|金|土)(?:曜日|曜)/);
+    if(m){const target=weekNames[m[1]],delta=(target-today.getDay()+7)%7;return{date:formatDate(plusDays(today,delta)),token:m[0],explicit:true}}
+    if(/(?:来週末|今週末|週末)/.test(text)){const delta=(6-today.getDay()+7)%7||7;const d=plusDays(today,delta);return{date:formatDate(d),token:(text.match(/来週末|今週末|週末/)||['週末'])[0],explicit:true}}
+    if(/(?:週明け|来週)/.test(text)){const delta=(8-today.getDay())%7||7;const d=plusDays(today,/来週/.test(text)?delta:delta);return{date:formatDate(d),token:(text.match(/週明け|来週/)||['来週'])[0],explicit:true}}
+    if(/今週/.test(text)){const d=plusDays(today,-((today.getDay()+6)%7));return{date:formatDate(d),token:'今週',explicit:true}}
+    if(/来月/.test(text)){const nextMonth=new Date(now.getFullYear(),now.getMonth()+1,1);const last=new Date(nextMonth.getFullYear(),nextMonth.getMonth()+1,0,12).getDate();const d=new Date(nextMonth.getFullYear(),nextMonth.getMonth(),Math.min(now.getDate(),last),12);return{date:formatDate(d),token:'来月',explicit:true}}
+    return null
+  }
+  function parseTimes(text){
+    const normalized=text.replace(/正午/g,'12時').replace(/真夜中|夜中/g,'深夜0時');
+    const re=/(午前|午後|深夜|朝|昼|夕方|夜)?\s*(\d{1,2})(?:(?::(\d{1,2}))|時(?:\s*(半|\d{1,2}\s*分?))?)(?!間)/g;
+    const result=[];
+    for(const m of normalized.matchAll(re)){
+      let hour=+m[2],minute=m[3]?+m[3]:m[4]==='半'?30:m[4]?parseInt(m[4],10):0,prefix=m[1]||(result.length&&result[0].prefix)||'';
+      if(/午後|夕方|夜/.test(prefix)&&hour<12)hour+=12;
+      else if(/午前|深夜|朝/.test(prefix)&&hour===12)hour=0;
+      else if(prefix==='昼'&&hour<11)hour+=12;
+      if(hour>23||minute>59)continue;
+      result.push({time:String(hour).padStart(2,'0')+':'+String(minute).padStart(2,'0'),raw:m[0],prefix})
+    }
+    return result
+  }
+  function parseDuration(text){
+    let m=text.match(/(?:所要時間|予定時間|かかる時間)?\s*(\d+)\s*時間(?:\s*(\d+)\s*分)?(?!前)/);
+    if(m)return Math.max(5,+m[1]*60+(+m[2]||0));
+    m=text.match(/(?:所要|予定)?\s*(\d+)\s*分(?:間)?(?!前)/);
+    return m?Math.max(5,+m[1]):null
+  }
+  function parseReminder(text){
+    if(/(?:通知|リマインド|アラーム)(?:は)?(?:なし|不要|しない)/.test(text)||/通知なし/.test(text))return 0;
+    if(/(?:前日|前の日|1\s*日前)/.test(text))return 1440;
+    let m=text.match(/(\d+)\s*時間前/);if(m)return +m[1]*60;
+    m=text.match(/(\d+)\s*分前/);if(m)return +m[1];
+    if(/当日(?:に)?通知/.test(text))return 60;
+    if(/通知|リマインド|アラーム/.test(text))return 10;
+    return null
+  }
+  function extractNotes(text){
+    const notes=[];
+    for(const m of text.matchAll(/(場所|会場|住所|会議室|持ち物|メモ)\s*(?:は|[:：])\s*([^\n,、。]+)/g))notes.push(m[1]+': '+m[2].trim());
+    const at=text.match(/@([^\s,、。]+)/);if(at)notes.push('場所: '+at[1]);
+    const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+    for(const line of lines.slice(1))if(!notes.some(note=>line.includes(note.split(': ')[1]||'\u0000')))notes.push(line);
+    return [...new Set(notes)].join(' / ').slice(0,300)
+  }
+  function cleanTitle(text){
+    let title=text;
+    title=title.replace(/(?:場所|会場|住所|会議室|持ち物|メモ)\s*(?:は|[:：])\s*[^\n,、。]+/g,' ');
+    title=title.replace(/@([^\s,、。]+)/g,' ');
+    title=title.replace(/(?:前日|前の日|\d+\s*(?:分|時間)\s*前)(?:に)?\s*(?:通知|リマインド|アラーム|教えて)?/g,' ');
+    title=title.replace(/(?:通知|リマインド|アラーム)(?:を)?(?:設定|して|お願い|お願いします)?/g,' ');
+    title=title.replace(/20\d{2}\s*(?:年|[-/.])\s*\d{1,2}\s*(?:月|[-/.])\s*\d{1,2}\s*日?/g,' ');
+    title=title.replace(/(?:来年|来月|今月)?\s*\d{1,2}\s*月\s*\d{1,2}\s*日?/g,' ');
+    title=title.replace(/\d{1,2}\s*\/\s*\d{1,2}/g,' ');
+    title=title.replace(/(?:来月|今月)\s*\d{1,2}\s*日(?!前|後|間)/g,' ');
+    title=title.replace(/\d{1,2}\s*日(?!前|後|間)/g,' ');
+    title=title.replace(/(?:\d+日後|\d+週間後)/g,' ');
+    title=title.replace(/(?:再来週|来週|今週|次の週|来週末|今週末|週末|週明け|月末|来月|今月|来年|明々後日|しあさって|明後日|あさって|明日|あした|今日|本日|きょう|昨日|きのう)/g,' ');
+    title=title.replace(/(?:来週|今週|次の週)?\s*(?:の)?\s*(?:日|月|火|水|木|金|土)(?:曜日|曜)/g,' ');
+    title=title.replace(/(正午|午前|午後|深夜|朝|昼|夕方|夜)?\s*\d{1,2}(?:(?::\d{1,2})|時(?:半|\s*\d{1,2}\s*分?)?)(?!間)/g,' ');
+    title=title.replace(/(?:所要時間|予定時間|かかる時間)?\s*\d+\s*時間(?:\s*\d+\s*分)?(?!前)/g,' ');
+    title=title.replace(/(?:所要|予定)?\s*\d+\s*分(?:間)?(?!前)/g,' ');
+    title=title.replace(/(?:タスク|やること|TODO|To-?Do)(?:として|で)?/gi,' ');
+    title=title.replace(/(?:予定を|予定として|予定|追加して|追加する|登録して|登録する|作成して|作成する|入れて|入れる|してください|お願いします)/g,' ');
+    title=title.replace(/[、,。・|〜～~\-–—]+/g,' ').replace(/[（(]\s*[日月火水木金土]\s*[）)]/g,' ').replace(/^[\s:：からまでにでのをはが]+|[\s:：からまでにでのをはが]+$/g,' ');
+    title=title.replace(/(?:^|\s)(?:から|まで|に|で|の|を|は|が)(?=\S)/g,' ');
+    return title.replace(/\s+/g,' ').trim()
+  }
+  function parseText(raw){
+    const text=ascii(raw).replace(/\r/g,'\n').trim(),dateInfo=parseDate(text),times=parseTimes(text),remind=parseReminder(text),requestedDuration=parseDuration(text);
+    let date=dateInfo&&dateInfo.date;
+    if(!date)date=$('.day.selected-day')?.dataset.date||formatDate(new Date());
+    let time=times[0]?.time||'',end=times[1]?.time||'',duration=requestedDuration;
+    if(time&&end){const [sh,sm]=time.split(':').map(Number),[eh,em]=end.split(':').map(Number);duration=((eh*60+em)-(sh*60+sm)+1440)%1440||60}
+    if(time&&!end){duration=duration||60;const [h,m]=time.split(':').map(Number),total=h*60+m+duration;end=String(Math.floor(total/60)%24).padStart(2,'0')+':'+String(total%60).padStart(2,'0')}
+    const title=cleanTitle(text)||text.split('\n')[0].trim();
+    const category=/タスク|やること|宿題|提出|締切|期限|買い物|TODO|To-?Do/i.test(text)?'task':/リマインダー/.test(text)?'reminder':'event';
+    return{date,time,end,duration:duration||'',remind,title,note:extractNotes(text),explicitDate:!!(dateInfo&&dateInfo.explicit)}
+  }
+  parseButton.onclick=()=>{
+    const raw=box.value.trim();if(!raw){box.focus();return}
+    const result=parseText(raw);
+    $('#textModal').classList.remove('open');$('#topAdd').click();
+    form.elements.title.value=result.title;
+    form.elements.date.value=result.date;
+    form.elements.time.value=result.time;
+    form.elements.end.value=result.end;
+    form.elements.duration.value=result.duration;
+    form.elements.category.value=result.category;
+    form.elements.note.value=result.note;
+    if(result.remind!==null){
+      const select=form.elements.remind,value=String(result.remind);
+      if(![...select.options].some(option=>option.value===value)){const option=document.createElement('option');option.value=value;option.textContent=value==='0'?'通知なし':(result.remind>=1440&&result.remind%1440===0?result.remind/1440+'日前':result.remind>=60&&result.remind%60===0?result.remind/60+'時間前':result.remind+'分前);select.add(option)}
+      select.value=value
+    }
+    const toast=$('#toast');
+    if(toast){toast.textContent=(result.explicitDate?'日付を読み取りました':'日付がないため選択中の日を設定しました')+'。内容を確認して保存してください';toast.style.display='block';clearTimeout(toast._timer);toast._timer=setTimeout(()=>toast.style.display='none',3500)}
+  };
+})();
+</script><script>
+(()=>{
+  const search=document.querySelector('input[placeholder*="予定を検索"]');
+  if(!search)return;
+  const $=selector=>document.querySelector(selector);
+  const eventKey='superSchedulerEvents',taskKey='superSchedulerTasks';
+  const aliases=[
+    ['ドルフィンズ','ドルフィン','ダイヤモンドドルフィンズ','名古屋ダイヤモンドドルフィンズ','名古屋ダイヤモンド','名古屋d','diamond dolphins','dolphins','nagoya dolphins','nagoya diamond dolphins','ndd']
+  ];
+  const normalize=value=>String(value||'').normalize('NFKC').toLocaleLowerCase().replace(/[０-９]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0xFEE0)).replace(/\s+/g,' ').trim();
+  function editDistance(a,b,limit){
+    if(Math.abs(a.length-b.length)>limit)return limit+1;
+    const prev=Array.from({length:b.length+1},(_,i)=>i);
+    for(let i=1;i<=a.length;i++){let diag=prev[0];prev[0]=i;let rowMin=prev[0];for(let j=1;j<=b.length;j++){const old=prev[j];prev[j]=Math.min(prev[j]+1,prev[j-1]+1,diag+(a[i-1]===b[j-1]?0:1));diag=old;rowMin=Math.min(rowMin,prev[j])}if(rowMin>limit)return limit+1}
+    return prev[b.length]
+  }
+  function planFor(query){
+    let rest=normalize(query);const groups=[];
+    for(const group of aliases){
+      const candidates=group.slice().sort((a,b)=>b.length-a.length);
+      const found=candidates.find(alias=>rest.includes(alias))||candidates.find(alias=>/^[a-z ]+$/.test(alias)&&rest.split(/\s+/).some(word=>word.length>=5&&editDistance(word,alias.replace(/\s+/g,''),1)<=1));
+      if(found){groups.push(group);rest=rest.replace(found,' ');if(found==='diamond dolphins'||found==='nagoya dolphins'||found==='nagoya diamond dolphins')rest=rest.replace(/^(?:diamond|nagoya|dolphins)\s*/,' ')}
+    }
+    rest=rest.replace(/(?:の)?(?:試合|予定|日程|スケジュール|イベント|チーム|対戦|観戦|ゲーム|game|games)/gi,' ');
+    const terms=rest.replaceAll('/',' ').replace(/[、。,:;／・|(){}]+/g,' ').split(/\s+/).filter(Boolean);
+    return{groups,terms,query:normalize(query)}
+  }
+  function itemText(item){
+    const date=item.date||'',time=item.time||'',title=item.title||item.name||'';
+    let dateText=date;
+    if(/^\d{4}-\d{2}-\d{2}$/.test(date)){const d=new Date(date+'T12:00:00');dateText+=' '+(d.getMonth()+1)+'月'+d.getDate()+'日 '+['日','月','火','水','木','金','土'][d.getDay()]+'曜日 '+(d.getMonth()+1)+'/'+d.getDate()}
+    const times=[time,item.end].filter(x=>/^\d{2}:\d{2}$/.test(x||'')).map(x=>x+' '+Number(x.slice(0,2))+'時'+x.slice(3)+'分').join(' ');
+    const category=item.category==='task'?'タスク':item.category==='reminder'?'リマインダー':'予定';
+    return normalize([title,item.name,item.note,item.location,item.place,item.category,category,item.done?'完了':'未完了',dateText,times].filter(Boolean).join(' '))
+  }
+  function matches(item,plan){
+    const text=itemText(item);
+    if(!plan.groups.every(group=>group.some(alias=>text.includes(normalize(alias)))))return false;
+    return plan.terms.every(term=>{
+      if(text.includes(term))return true;
+      if(/^[a-z]{5,}$/.test(term)){const words=text.match(/[a-z]{5,}/g)||[];return words.some(word=>editDistance(term,word,1)<=1)}
+      if(/^\d{1,2}月$/.test(term)){const month=Number(term.slice(0,-1));return text.includes(month+'月')}
+      return false
+    })
+  }
+  function readItems(){
+    let events=[],tasks=[];
+    try{events=JSON.parse(localStorage.getItem(eventKey)||'[]');if(!Array.isArray(events))events=[]}catch{}
+    try{tasks=JSON.parse(localStorage.getItem(taskKey)||'[]');if(!Array.isArray(tasks))tasks=[]}catch{}
+    const list=events.map(item=>({...item,_source:'event'}));
+    for(const task of tasks)list.push({...task,title:task.title||task.name||'タスク',category:'task',_source:'task'});
+    const today=new Date();today.setHours(0,0,0,0);const todayString=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+    return list.sort((a,b)=>{
+      const ad=a.date||'9999-99-99',bd=b.date||'9999-99-99',af=ad>=todayString,bf=bd>=todayString;
+      if(af!==bf)return af?-1:1;
+      if(ad!==bd)return af?ad.localeCompare(bd):bd.localeCompare(ad);
+      return String(a.time||'').localeCompare(String(b.time||''))
+    })
+  }
+  const controls=search.parentElement;controls.style.position='relative';search.placeholder='予定を検索';search.setAttribute('aria-label','全予定を検索');search.setAttribute('aria-autocomplete','list');
+  const popup=document.createElement('div');popup.setAttribute('role','listbox');popup.style.cssText='display:none;position:absolute;z-index:100;top:calc(100% + 8px);right:0;width:min(430px,calc(100vw - 36px));max-height:58vh;overflow:auto;background:#fff;border:1px solid #e8ebe6;border-radius:14px;box-shadow:0 14px 40px #26372a26;padding:8px';
+  controls.append(popup);
+  let results=[];
+  function appendHeader(count){const head=document.createElement('div');head.textContent='検索結果 '+count+'件 · チーム名・日付・場所でも検索できます';head.style.cssText='padding:8px 10px 10px;color:#748077;font-size:12px;font-weight:700';popup.append(head)}
+  function renderResults(){
+    const value=search.value.trim();popup.replaceChildren();if(!value){popup.style.display='none';return}
+    const plan=planFor(value);results=readItems().filter(item=>matches(item,plan));appendHeader(results.length);
+    if(!results.length){const empty=document.createElement('div');empty.textContent='一致する予定はありません。チーム名・日付・場所でも検索できます。';empty.style.cssText='padding:12px;color:#858d87;font-size:13px;line-height:1.6';popup.append(empty);popup.style.display='block';return}
+    for(let i=0;i<results.length;i++){
+      const item=results[i],button=document.createElement('button');button.type='button';button.setAttribute('role','option');button.dataset.index=String(i);
+      button.style.cssText='display:block;width:100%;text-align:left;border:0;border-radius:10px;background:#fff;padding:10px;cursor:pointer;color:#24382c';
+      button.onmouseenter=()=>button.style.background='#f2f6f2';button.onmouseleave=()=>button.style.background='#fff';
+      const title=document.createElement('strong');title.textContent=item.title||item.name||'（タイトルなし）';title.style.cssText='display:block;font-size:13px;line-height:1.4';
+      const meta=document.createElement('span');let dateLabel='日付未設定';if(/^\d{4}-\d{2}-\d{2}$/.test(item.date||'')){const d=new Date(item.date+'T12:00:00');dateLabel=(d.getMonth()+1)+'月'+d.getDate()+'日（'+['日','月','火','水','木','金','土'][d.getDay()]+'）'}
+      const timeLabel=/^\d{2}:\d{2}$/.test(item.time||'')?item.time+' · ':'';meta.textContent=timeLabel+dateLabel+' · '+(item.category==='task'?'タスク':item.category==='reminder'?'リマインダー':'予定')+(item.note?' · '+item.note:'');meta.style.cssText='display:block;margin-top:4px;color:#778079;font-size:11px;line-height:1.5';
+      button.append(title,meta);button.onmousedown=event=>event.preventDefault();button.onclick=()=>selectResult(results[Number(button.dataset.index)]);popup.append(button)
+    }
+    popup.style.display='block'
+  }
+  function applySmartFilter(){
+    const value=search.value.trim();if(!value)return;
+    const plan=planFor(value);
+    document.querySelectorAll('.day').forEach(day=>{
+      const has=[...day.querySelectorAll('.event')].some(node=>matches({title:node.textContent,date:day.dataset.date},plan));
+      day.style.opacity=has?'':'0.2'
+    });
+    document.querySelectorAll('.agenda-row').forEach(row=>{row.style.display=matches({title:row.textContent},plan)?'':'none'});
+  }
+  search.addEventListener('input',()=>{renderResults();applySmartFilter()});
+  search.addEventListener('focus',renderResults);
+  search.addEventListener('keydown',event=>{if(event.key==='Escape'){popup.style.display='none';search.blur()}});
+  document.addEventListener('click',event=>{if(!controls.contains(event.target))popup.style.display='none'});
+  const observer=new MutationObserver(()=>{if(search.value.trim())applySmartFilter()});
+  observer.observe($('#days'),{childList:true});observer.observe($('#agendaList'),{childList:true});
+  function selectResult(item){
+    popup.style.display='none';
+    if(item._source==='task'&&!item.date){$('#taskList')?.scrollIntoView({behavior:'smooth',block:'center'});return}
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(item.date||'')){return}
+    const target=new Date(item.date+'T12:00:00'),wanted=target.getFullYear()*12+target.getMonth();
+    for(let i=0;i<36;i++){
+      const match=($('#monthTitle')?.textContent||'').match(/(\d{4})年\s*(\d{1,2})月/);if(!match)break;
+      const current=Number(match[1])*12+Number(match[2])-1,diff=wanted-current;if(!diff)break;
+      (diff>0?$('#nextMonth'):$('#prevMonth'))?.click()
+    }
+    document.querySelector('.day[data-date="'+item.date+'"]')?.click();
+    setTimeout(()=>{
+      const agenda=$('#agendaList'),row=[...agenda.querySelectorAll('.agenda-row')].find(node=>normalize(node.textContent).includes(normalize(item.title||item.name||'')));
+      agenda.scrollIntoView({behavior:'smooth',block:'start'});
+      if(row){row.style.outline='2px solid #74a88c';row.style.outlineOffset='2px';setTimeout(()=>{row.style.outline='';row.style.outlineOffset=''},1800)}
+      applySmartFilter()
+    },60)
+  }
+})();
+</script></body></html>
+
+
+
+
+
+
+
+
